@@ -3,6 +3,9 @@ import * as HPS from "./HomePageStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MidLogo from "../Images/transparentreddit3.png"
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import { routes } from '../Router';
 
 class HomePage extends Component {
   render() {
@@ -14,6 +17,7 @@ class HomePage extends Component {
           <HPS.MidLogo src={MidLogo}/>
         </HPS.CustomHeader>
         <div>Oi sou a home</div>
+        <button onClick={this.props.goToLoginPage}>Login</button>
 
 
 
@@ -31,5 +35,10 @@ class HomePage extends Component {
     );
   }
 }
+function mapDispatchToProps(dispatch) {
+  return{
+    goToLoginPage: () =>dispatch(push(routes.LoginPage)),
+  }
+}
 
-export default HomePage;
+export default connect(null, mapDispatchToProps) (HomePage)
