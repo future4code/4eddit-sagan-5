@@ -42,6 +42,24 @@ export const FooterLogo = styled.img`
     width: 40px;
 `
 
+export const NewPostDisclaimer = styled.h3`
+    padding: 0;
+    margin-top: 15px;
+    margin-bottom: -10px;
+    text-decoration: underline;
+`
+
+export const NewPostContainer = styled.form`
+    padding: 0 40px 0 40px;
+    margin-bottom: 20px;
+`
+
+export const FeedContainerDisclaimer = styled.h2`
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding: 0;
+`
+
 export const FeedContainer = styled.div`
     display: grid;
     grid-template-columns: 5fr 1fr 1fr;
