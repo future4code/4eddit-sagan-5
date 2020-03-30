@@ -3,6 +3,9 @@ import * as LPS from "./LoginPageStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MidLogo from "../Images/transparentreddit3.png"
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import { routes } from '../Router';
 
 class LoginPage extends Component {
   render() {
@@ -10,7 +13,7 @@ class LoginPage extends Component {
       <LPS.MainDiv>
 
         <LPS.CustomHeader>
-          <LPS.SmallLogo src="https://image.flaticon.com/icons/png/512/52/52053.png"/>
+          <LPS.SmallLogo onClick={this.props.goToHomePage} src="https://image.flaticon.com/icons/png/512/52/52053.png"/>
           <LPS.MidLogo src={MidLogo}/>
         </LPS.CustomHeader>
 
@@ -47,4 +50,9 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+function mapDispatchToProps(dispatch){
+  return{
+      goToHomePage: () => dispatch(push(routes.HomePage)),
+  }
+}
+export default connect(null, mapDispatchToProps) (LoginPage)
