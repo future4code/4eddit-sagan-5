@@ -43,10 +43,16 @@ export const FooterLogo = styled.img`
 `
 
 export const LoginWrapper = styled.form`
-width: 100%;
-height: 80vh;
-gap: 10px;
-place-content: center;
-justify-items: center;
-display: grid;
+    width: 100%;
+    height: 80vh;
+    gap: 10px;
+    place-content: center;
+    justify-items: center;
+    display: grid;
 `;
+
+export const LoginDivider = styled.div`
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+`
