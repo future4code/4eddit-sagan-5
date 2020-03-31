@@ -46,6 +46,14 @@ class FeedPage extends Component {
   };
 
 
+  // ----------------- Nao consegui verificar se o usuario esta logado ou nao -----------------
+  userNotLogin = (event) => {
+    if(window.localStorage === null) {
+      alert("Você ainda não está logado. Por favor faça o login ou crie um cadastro =)")
+    }    
+  }
+
+
   render() { 
     return (
       <FPS.MainDiv>
@@ -102,13 +110,13 @@ class FeedPage extends Component {
 
               <FPS.DivTeste2>
               <IconButton aria-label="delete" size="small">
-                <ThumbUpIcon fontSize="inherit" color="primary"/>
+                <ThumbUpIcon onClick={this.userNotLogin} fontSize="inherit" color="primary"/>
               </IconButton>
 
                 {post.votesCount}
 
               <IconButton aria-label="delete" size="small">
-                <ThumbDownIcon fontSize="inherit" color="secondary" />
+                <ThumbDownIcon onClick={this.userNotLogin} fontSize="inherit" color="secondary" />
               </IconButton>
 
               </FPS.DivTeste2>
