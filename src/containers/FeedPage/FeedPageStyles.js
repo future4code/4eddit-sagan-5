@@ -71,15 +71,19 @@ export const FeedContainer = styled.div`
 export const DivTeste1 = styled.div`
     background-color: rgb(200,200,200);
     padding: 10px;
+    border-radius: 10px;
 `
 
 export const DivTeste2 = styled.div`
     background-color: rgb(200,200,200);
-    padding: 10
-    px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
 `
 
 export const DivTeste3 = styled.div`
     background-color: rgb(200,200,200);
     padding: 10px;
+    border-radius: 10px;
 `

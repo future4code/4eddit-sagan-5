@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as FPS from "./FeedPageStyles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import MidLogo from "../Images/transparentreddit3.png"
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
@@ -10,19 +11,39 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
-import { getPosts } from '../Actions/WebsiteActions';
+import { getPosts, createPost } from '../Actions/WebsiteActions';
 
 
 class FeedPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      postTitle: "",
+      postBody: "",
     };
   }
 
   componentDidMount() {
     this.props.getPosts();
   }
+
+  handleNewPost = (event) =>{
+    event.preventDefault();
+
+
+    const postData = {
+      title: this.state.postTitle,
+      text: this.state.postBody
+    }
+
+    this.props.createPost(postData)
+  }
+
+  handleFieldChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
 
 
   render() { 
@@ -40,9 +61,12 @@ class FeedPage extends Component {
           CRIE SEU PROPRIO POST! :D
         </FPS.NewPostDisclaimer>
 
-        <FPS.NewPostContainer>
+        <FPS.NewPostContainer onSubmit={this.handleNewPost}>
+
           <TextField 
+            onChange={this.handleFieldChange}
             required
+            name="postTitle"
             label="Titulo do Post"
             fullWidth
             margin="normal"
@@ -50,7 +74,9 @@ class FeedPage extends Component {
           />
 
           <TextField
+            onChange={this.handleFieldChange}
             required
+            name="postBody"
             label="Conteudo do Post"
             fullWidth
             multiline="true"
@@ -59,7 +85,8 @@ class FeedPage extends Component {
             variant="outlined"
           />
 
-          <Button variant="contained" color="primary" size="small">Postar</Button>
+          <Button type="submit" variant="contained" color="primary" size="small">Postar</Button>
+
         </FPS.NewPostContainer>
 
         <Divider />
@@ -72,7 +99,20 @@ class FeedPage extends Component {
           {this.props.posts.map(post => (
             <FPS.FeedContainer>
               <FPS.DivTeste1>{post.title}</FPS.DivTeste1>
-              <FPS.DivTeste2>{post.votesCount}</FPS.DivTeste2>
+
+              <FPS.DivTeste2>
+              <IconButton aria-label="delete" size="small">
+                <ThumbUpIcon fontSize="inherit" color="primary"/>
+              </IconButton>
+
+                {post.votesCount}
+
+              <IconButton aria-label="delete" size="small">
+                <ThumbDownIcon fontSize="inherit" color="secondary" />
+              </IconButton>
+
+              </FPS.DivTeste2>
+
               <FPS.DivTeste3>{post.username}</FPS.DivTeste3>
             </FPS.FeedContainer>
           ))}
@@ -101,6 +141,7 @@ function mapDispatchToProps(dispatch){
     return{
         goToHomePage: () => dispatch(push(routes.HomePage)),
         getPosts: () => dispatch(getPosts()),
+        createPost: (postData) => dispatch(createPost(postData)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps) (FeedPage)
