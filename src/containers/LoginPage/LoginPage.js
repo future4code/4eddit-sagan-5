@@ -89,7 +89,7 @@ class LoginPage extends Component {
             value={username}
           />
 
-          <Button onClick={() => this.handleSignupLoginButtonClick('login')} type="submit">Login</Button> 
+          <Button onClick={() => this.handleSignupLoginButtonClick('login')} type="submit">Login</Button>
 
           <Button onClick={() => this.handleSignupLoginButtonClick('signup')} type="submit">Cadastrar</Button>
 

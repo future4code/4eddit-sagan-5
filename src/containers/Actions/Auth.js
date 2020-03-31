@@ -2,7 +2,7 @@ import axios from 'axios';
 import { push } from "connected-react-router";
 import { routes } from '../Router';
 
-const baseURL = 'https://us-central1-missao-newton.cloudfunctions.net/futureX/leocrispim'
+const baseURL = 'https://us-central1-future-apis.cloudfunctions.net/fourEddit'
 
 
 export const login = (email, password) => async (dispatch) =>{
