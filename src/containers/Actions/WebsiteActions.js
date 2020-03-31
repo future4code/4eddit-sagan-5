@@ -54,17 +54,51 @@ const setSelectedPost = (postID) => ({
 	}
 })
 
+const setPostDetails = (postDetails) => ({
+	type: 'SET_POST_DETAILS',
+	payload: {
+		postDetails
+	}
+})
+
 export const getPostDetails = (postID) => async (dispatch) => {
 	try {
-		console.log(postID)
         const response = await axios.get(`${baseURL}/posts/${postID}`, {
             headers: {
                 auth: localStorage.getItem("token")
             }
 		})
-		console.log(response.data)
+		console.log(response.data.post)
+		dispatch(setPostDetails(response.data.post))
 	} catch (error) {
 		console.log(error)
 		alert('Erro ao tentar adquirir detalhes sobre o post')
+	}
+}
+
+export const setSelectedPostID = (postID) => async (dispatch) => {
+	dispatch(setSelectedPost(postID))
+}
+
+const setAddScore = (postID) => ({
+	type: 'ADD_SCORE',
+	payload: postID
+	
+})
+
+export const addScore = (postID) => async (dispatch) => {
+	try {
+		console.log(postID)
+        const response = await axios.put(`${baseURL}/posts/${postID}/vote`, {
+			Body: {"direction": 1},
+            headers: {
+                auth: localStorage.getItem("token")
+            }
+		})
+		dispatch()
+		
+	} catch (error) {
+		console.log(error)
+		alert('Erro ao tentar dar like')
 	}
 }

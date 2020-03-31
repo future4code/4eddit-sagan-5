@@ -41,3 +41,26 @@ export const FooterLogo = styled.img`
     height: 35px;
     width: 40px;
 `
+
+export const FeedContainer = styled.div`
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 30px;
+    padding: 20px;
+`
+
+export const DivTeste1 = styled.div`
+    background-color: rgb(200,200,200);
+    padding: 10px;
+`
+
+export const DivTeste2 = styled.div`
+    background-color: rgb(200,200,200);
+    padding: 10px;
+`
+
+export const DivTeste3 = styled.div`
+    background-color: rgb(200,200,200);
+    padding: 10px;
+`
