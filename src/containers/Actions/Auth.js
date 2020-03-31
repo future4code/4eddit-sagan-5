@@ -4,7 +4,6 @@ import { routes } from '../Router';
 
 const baseURL = 'https://us-central1-future-apis.cloudfunctions.net/fourEddit'
 
-
 export const login = (email, password) => async (dispatch) =>{
     const loginData ={
         email,
@@ -24,7 +23,6 @@ export const login = (email, password) => async (dispatch) =>{
         console.error(error)
         alert("Erro ao tentar fazer o login")
     }
-
 }
 
 export const signup = (email, password, username) => async (dispatch) => {
@@ -42,5 +40,4 @@ export const signup = (email, password, username) => async (dispatch) => {
         console.error(error)
         alert("Erro ao tentar criar uma conta")
     }
-
 }

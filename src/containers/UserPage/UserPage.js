@@ -38,9 +38,20 @@ class UserPage extends Component {
         </UPS.CustomHeader>
         </Paper>
 
-        <div>
-            Eu sou a pagina do usuario
-        </div>
+
+        <UPS.GreetingsTitle>Seja bem vindo a sua página pessoal</UPS.GreetingsTitle>
+
+        <UPS.GreetingsDescription>Parece que não tem nada aqui, mas já já você poderá customizar esse seu cantinho do jeito que quiser!</UPS.GreetingsDescription>
+
+        <UPS.BigLogo src="https://i.ya-webdesign.com/images/reddit-alien-png-3.png" />
+
+        <UPS.GreetingsConstruction>No momento o site ainda está em construção mas sinta-se a vontade para navegar mais facilmente atraves dos seguintes links:</UPS.GreetingsConstruction>
+
+        <UPS.ConstructionLinksContainer>
+          <Button onClick={this.props.goToDisclaimerPage} size="small" variant="contained" color="primary">Ler Disclaimer</Button>
+          <Button onClick={this.props.goToHomePage} size="small" variant="contained" color="primary">Voltar para Home</Button>
+          <Button onClick={this.props.goToFeedPage} size="small" variant="contained" color="primary">Acessar o Feed</Button>
+        </UPS.ConstructionLinksContainer>
         
 
         <Paper elevation={3}>
@@ -62,7 +73,9 @@ class UserPage extends Component {
 function mapDispatchToProps(dispatch){
     return{
         goToHomePage: () => dispatch(push(routes.HomePage)),
+        goToFeedPage: () => dispatch(push(routes.FeedPage)),
         goToLoginPage: () => dispatch(push(routes.LoginPage)),
+        goToDisclaimerPage: () => dispatch(push(routes.DisclaimerPage)),
     }
 }
 export default connect(null, mapDispatchToProps) (UserPage)

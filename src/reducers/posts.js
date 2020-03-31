@@ -1,5 +1,7 @@
 const initialState = {
     postList: [],
+    selectedPostID: "",
+    postDetails: [],
 }
 
 const posts = (state = initialState, action) =>{
@@ -8,6 +10,11 @@ const posts = (state = initialState, action) =>{
             return {
                 ...state,
                 postList: action.payload.posts
+            }
+        case 'SET_SELECTED_POST':
+            return {
+                ...state,
+                selectedPostID: action.payload.postID
             }
     
         default:
