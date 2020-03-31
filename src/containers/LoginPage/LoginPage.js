@@ -7,9 +7,50 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
+import { signup, login } from '../Actions/Auth';
 
 class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      username: "",
+      selectedButton: "",
+    };
+  }
+
+  handleSignupLoginButtonClick = (param) =>{
+    this.setState({
+      selectedButton: param
+    })
+  }
+
+  handleFieldChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  handleLogin = (event) =>{
+    event.preventDefault();
+
+    const { email, password, username } = this.state
+
+    console.log(this.state.selectedButton)
+
+    if(this.state.selectedButton === 'login'){
+      this.props.login(email, password)
+    }
+
+    if(this.state.selectedButton === 'signup'){
+      this.props.signup(email, password, username)
+    }
+  }
+
   render() {
+    const { email, password, username } = this.state; 
+
     return (
       <LPS.MainDiv>
 
@@ -20,22 +61,37 @@ class LoginPage extends Component {
         </LPS.CustomHeader>
         </Paper>
 
-        <LPS.LoginWrapper>
+        <LPS.LoginWrapper  onSubmit={this.handleLogin}>
+
           <TextField
+            onChange={this.handleFieldChange}
             name="email"
             type="email"
             label="E-mail"
             required
+            value={email}
           />
 
           <TextField
+            onChange={this.handleFieldChange}
             name="password"
             type="password"
             label="Password"
             required
+            value={password}
           />
 
-          <Button type="submit">Login</Button> <Button type="submit">Cadastrar</Button>
+          <TextField
+            onChange={this.handleFieldChange}
+            name="username"
+            type="username"
+            label="Username"
+            value={username}
+          />
+
+          <Button onClick={() => this.handleSignupLoginButtonClick('login')} type="submit">Login</Button> 
+
+          <Button onClick={() => this.handleSignupLoginButtonClick('signup')} type="submit">Cadastrar</Button>
 
         </LPS.LoginWrapper>
 
@@ -58,6 +114,8 @@ class LoginPage extends Component {
 function mapDispatchToProps(dispatch){
   return{
       goToHomePage: () => dispatch(push(routes.HomePage)),
+      signup: (email, password, username) => dispatch(signup(email, password, username)),
+      login: (email, password) => dispatch(login(email, password)),
   }
 }
 export default connect(null, mapDispatchToProps) (LoginPage)

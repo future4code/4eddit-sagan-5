@@ -20,8 +20,25 @@ export const getPosts = () => async (dispatch) => {
             }
         })
 		dispatch(setPosts(response.data.posts))
+		console.log(response.data.posts)
 	} catch (error) {
 		console.log(error)
 		alert('Erro ao tentar adquirir lista de posts')
+	}
+}
+
+export const createPost = (postData) => async (dispatch) => {
+	try{
+		await axios.post(`${baseURL}/posts`, postData, {
+			headers: {
+				auth: localStorage.getItem("token")
+			}, 
+		})
+		alert('Post criado com sucesso!')
+		dispatch(getPosts())
+	}
+	catch (error){
+		console.error(error)
+		alert('Erro ao tentar criar post')
 	}
 }

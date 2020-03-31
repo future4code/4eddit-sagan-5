@@ -12,6 +12,21 @@ import Paper from '@material-ui/core/Paper';
 
 
 class UserPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
+  componentDidMount() {
+    const token = window.localStorage.getItem("token");
+
+    if(token === null){
+      this.props.goToLoginPage();
+    }
+  }
+
+
   render() {
     return (
       <UPS.MainDiv>
@@ -47,6 +62,7 @@ class UserPage extends Component {
 function mapDispatchToProps(dispatch){
     return{
         goToHomePage: () => dispatch(push(routes.HomePage)),
+        goToLoginPage: () => dispatch(push(routes.LoginPage)),
     }
 }
 export default connect(null, mapDispatchToProps) (UserPage)
