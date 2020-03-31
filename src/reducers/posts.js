@@ -1,5 +1,6 @@
 const initialState = {
     postList: [],
+    currentUser: "",
 }
 
 const posts = (state = initialState, action) =>{

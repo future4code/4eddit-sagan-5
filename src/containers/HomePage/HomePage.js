@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as HPS from "./HomePageStyles";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MidLogo from "../Images/transparentreddit3.png"
 import { connect } from "react-redux";
@@ -31,7 +30,7 @@ class HomePage extends Component {
         </HPS.BodyDisclaimer>
 
         <HPS.LinksContainer>
-          <Button size="small" variant="contained">Ler disclaimer do site</Button>
+          <Button onClick={this.props.goToDisclaimerPage} size="small" variant="contained">Ler disclaimer do site</Button>
           <Button onClick={this.props.goToLoginPage} size="small" variant="contained" color="primary">Pagina de Login</Button>
           <Button onClick={this.props.goToFeedPage} size="small" variant="contained">Dar uma olhada no feed</Button>
         </HPS.LinksContainer>
@@ -53,7 +52,8 @@ class HomePage extends Component {
 }
 function mapDispatchToProps(dispatch) {
   return{
-    goToLoginPage: () =>dispatch(push(routes.LoginPage)),
+    goToLoginPage: () => dispatch(push(routes.LoginPage)),
+    goToDisclaimerPage: () => dispatch(push(routes.DisclaimerPage)),
     goToFeedPage: () => dispatch(push(routes.FeedPage)),
   }
 }

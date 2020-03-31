@@ -5,6 +5,7 @@ import LoginPage from "../LoginPage/LoginPage";
 import FeedPage from "../FeedPage/FeedPage";
 import HomePage from "../HomePage/HomePage";
 import UserPage from "../UserPage/UserPage";
+import DisclaimerPage from "../DisclaimerPage/DisclaimerPage";
 
 
 
@@ -13,6 +14,7 @@ export const routes = {
   FeedPage: "/feed",
   HomePage: "/home",
   UserPage: "/user",
+  DisclaimerPage: "/disclaimer",
   // Outras rotas aqui
 };
 
@@ -24,6 +26,7 @@ function Router(props) {
         <Route exact path={routes.FeedPage} component={FeedPage} />
         <Route exact path={routes.HomePage} component={HomePage} />
         <Route exact path={routes.UserPage} component={UserPage} />
+        <Route exact path={routes.DisclaimerPage} component={DisclaimerPage} />
       </Switch>
     </ConnectedRouter>
   );
