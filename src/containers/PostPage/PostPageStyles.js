@@ -41,24 +41,3 @@ export const FooterLogo = styled.img`
     height: 35px;
     width: 40px;
 `
-
-export const BigLogo = styled.img`
-    height: 300px;
-    width: 200px;
-`
-
-export const BodyTitle = styled.h1`
-`
-
-export const BodyDisclaimer = styled.h4`
-`
-
-export const LinksContainer = styled.div`
-    margin: auto;
-    width: 55%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 20px;
-    padding: 10px;
-    margin-bottom: 20px;
-`

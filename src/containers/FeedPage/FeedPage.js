@@ -11,7 +11,7 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
-import { getPosts, createPost } from '../Actions/WebsiteActions';
+import { getPosts, createPost, setSelectedPostIDAndPush } from '../Actions/WebsiteActions';
 
 
 class FeedPage extends Component {
@@ -98,7 +98,7 @@ class FeedPage extends Component {
  
           {this.props.posts.map(post => (
             <FPS.FeedContainer>
-              <FPS.DivTeste1>{post.title}</FPS.DivTeste1>
+              <FPS.DivTeste1 onClick={() => this.props.goToPostPage(post.id)}>{post.title}</FPS.DivTeste1>
 
               <FPS.DivTeste2>
               <IconButton aria-label="delete" size="small">
@@ -140,6 +140,7 @@ const mapStateToProps = (state) => ({
 function mapDispatchToProps(dispatch){
     return{
         goToHomePage: () => dispatch(push(routes.HomePage)),
+        goToPostPage: (postID) => dispatch(setSelectedPostIDAndPush(postID)),
         getPosts: () => dispatch(getPosts()),
         createPost: (postData) => dispatch(createPost(postData)),
     }

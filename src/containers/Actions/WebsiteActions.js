@@ -20,7 +20,6 @@ export const getPosts = () => async (dispatch) => {
             }
         })
 		dispatch(setPosts(response.data.posts))
-		console.log(response.data.posts)
 	} catch (error) {
 		console.log(error)
 		alert('Erro ao tentar adquirir lista de posts')
@@ -40,5 +39,32 @@ export const createPost = (postData) => async (dispatch) => {
 	catch (error){
 		console.error(error)
 		alert('Erro ao tentar criar post')
+	}
+}
+
+export const setSelectedPostIDAndPush = (postID) => async (dispatch) => {
+	dispatch(setSelectedPost(postID))
+	dispatch(push(routes.PostPage))
+}
+
+const setSelectedPost = (postID) => ({
+	type: 'SET_SELECTED_POST',
+	payload: {
+		postID
+	}
+})
+
+export const getPostDetails = (postID) => async (dispatch) => {
+	try {
+		console.log(postID)
+        const response = await axios.get(`${baseURL}/posts/${postID}`, {
+            headers: {
+                auth: localStorage.getItem("token")
+            }
+		})
+		console.log(response.data)
+	} catch (error) {
+		console.log(error)
+		alert('Erro ao tentar adquirir detalhes sobre o post')
 	}
 }

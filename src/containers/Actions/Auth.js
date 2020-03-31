@@ -40,5 +40,4 @@ export const signup = (email, password, username) => async (dispatch) => {
         console.error(error)
         alert("Erro ao tentar criar uma conta")
     }
-
 }

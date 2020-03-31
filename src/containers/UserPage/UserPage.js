@@ -48,7 +48,7 @@ class UserPage extends Component {
         <UPS.GreetingsConstruction>No momento o site ainda está em construção mas sinta-se a vontade para navegar mais facilmente atraves dos seguintes links:</UPS.GreetingsConstruction>
 
         <UPS.ConstructionLinksContainer>
-          <Button onClick={this.props.goToHomePage} size="small" variant="contained" color="primary">Ler Disclaimer</Button>
+          <Button onClick={this.props.goToDisclaimerPage} size="small" variant="contained" color="primary">Ler Disclaimer</Button>
           <Button onClick={this.props.goToHomePage} size="small" variant="contained" color="primary">Voltar para Home</Button>
           <Button onClick={this.props.goToFeedPage} size="small" variant="contained" color="primary">Acessar o Feed</Button>
         </UPS.ConstructionLinksContainer>

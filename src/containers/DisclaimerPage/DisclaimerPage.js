@@ -7,7 +7,7 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
 
-class HomePage extends Component {
+class DisclaimerPage extends Component {
   render() {
     return (
       <DPS.MainDiv>
@@ -60,4 +60,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps) (HomePage)
+export default connect(null, mapDispatchToProps) (DisclaimerPage)
