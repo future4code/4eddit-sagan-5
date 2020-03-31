@@ -16,6 +16,16 @@ const posts = (state = initialState, action) =>{
                 ...state,
                 selectedPostID: action.payload.postID
             }
+        case 'SET_POST_DETAILS':
+            return {
+                ...state,
+                postDetails: action.payload.postDetails
+            }
+        case 'ADD_SCORE':
+            return {
+                ...state,
+                postList: action.payload.postDetails
+            }
     
         default:
             return state;

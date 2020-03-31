@@ -5,7 +5,12 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
-import { getPostDetails } from "../Actions/WebsiteActions";
+import { getPostDetails, addScore } from "../Actions/WebsiteActions";
+import Divider from '@material-ui/core/Divider';
+import IconButton from "@material-ui/core/IconButton";
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+
 
 class PostPage extends Component {
   constructor(props) {
@@ -15,7 +20,7 @@ class PostPage extends Component {
   }
 
   componentDidMount() {
-    const { getPostDetails, goToLoginPage, goToHomePage, selectedPostID } = this.props
+    const { getPostDetails, goToLoginPage, goToFeedPage, selectedPostID, addScore } = this.props
   
 
     const token = window.localStorage.getItem("token");
@@ -25,7 +30,7 @@ class PostPage extends Component {
     }
 
     if (selectedPostID === null) {
-      goToHomePage();
+      goToFeedPage();
     }
 
     getPostDetails(selectedPostID)
@@ -43,9 +48,39 @@ class PostPage extends Component {
         </Paper>
 
       <div>
-        essa eh a post page
-      </div>
+        {console.log(this.props.postDetails)}
+        {this.props.postDetails && this.props.postDetails.username}
 
+        <h3>Titulo do Post aqui</h3>
+
+        <PPS.FeedContainer>
+
+              <PPS.DivTeste1> Post aqui </PPS.DivTeste1>
+
+              <PPS.DivTeste3> Nome do usuario</PPS.DivTeste3>
+
+              <PPS.DivTeste2>
+              <IconButton aria-label="delete" size="small">
+                <ThumbUpIcon onClick={()=>this.props.addScore(this.props.selectedPostID)} fontSize="inherit" color="primary"/>
+              </IconButton>
+
+                60
+
+              <IconButton aria-label="delete" size="small">
+                <ThumbDownIcon fontSize="inherit" color="secondary" />
+              </IconButton>
+
+              </PPS.DivTeste2>
+
+
+            </PPS.FeedContainer>
+          ))}
+
+      </div>
+      
+        <Divider/>
+
+        <div>Aqui serao os comentarios</div>
 
         <Paper elevation={3}>
         <PPS.Footer>
@@ -76,6 +111,7 @@ function mapDispatchToProps(dispatch) {
     goToDisclaimerPage: () => dispatch(push(routes.DisclaimerPage)),
     goToFeedPage: () => dispatch(push(routes.FeedPage)),
     getPostDetails: (postID) => dispatch(getPostDetails(postID)),
+    addScore: (postID) => dispatch(addScore(postID)),
   }
 }
 

@@ -53,7 +53,7 @@ class FeedPage extends Component {
     }    
   }
 
-
+  
   render() { 
     return (
       <FPS.MainDiv>
