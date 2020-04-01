@@ -87,19 +87,65 @@ const setAddScore = (postID) => ({
 	}
 })
 
-export const addScore = (postID) => async (dispatch) => {
+export const addScore = (postID,userVoteDirection) => async (dispatch) => {
+	debugger
+	let direction = 1;
+	console.log(userVoteDirection)
+	if(userVoteDirection === 1){
+		direction = 0;
+   }
+	
 	try {
 		console.log(postID)
-        await axios.put(`${baseURL}/posts/${postID}/vote`, {
-			Body: {"direction": 1},
+		 await axios.put(`${baseURL}/posts/${postID}/vote`, 
+		{
+			direction	
+		},{
             headers: {
                 auth: localStorage.getItem("token")
             }
 		})
-		dispatch(setAddScore(postID))
 		alert('Like dado com sucesso!')
+		dispatch(getPosts())
 	} catch (error) {
-		console.log(error)
+	
+		console.log(error);
+		alert('Erro ao tentar dar like')
+	}
+}
+const setSubScore = (postID) => ({
+	type: 'SUB_SCORE',
+	payload: {
+		postID
+	}
+})
+
+export const subScore = (postID,userVoteDirection) => async (dispatch) => {
+	let direction = -1
+	debugger
+	console.log(userVoteDirection)
+	if(userVoteDirection === -1){
+		 direction = 0;
+	}
+	
+		
+	
+	
+	try {
+		console.log(postID)
+		 await axios.put(`${baseURL}/posts/${postID}/vote`, 
+		{
+			direction	
+		},{
+            headers: {
+                auth: localStorage.getItem("token")
+            }
+		})
+		alert('Like dado com sucesso!')
+		dispatch(getPosts())
+	} catch (error) {
+	
+		console.log(error);
 		alert('Erro ao tentar dar like')
 	}
 }
