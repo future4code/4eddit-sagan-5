@@ -21,16 +21,6 @@ const posts = (state = initialState, action) =>{
                 ...state,
                 postDetails: action.payload.postDetails
             }
-        case 'ADD_SCORE':
-            return {
-                ...state,
-                postList: action.payload.postDetails
-            }
-        case 'SUB_SCORE':
-            return {
-                ...state,
-                postList: action.payload.postDetails
-            }    
         default:
             return state;
     }

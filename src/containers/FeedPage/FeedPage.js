@@ -53,7 +53,7 @@ class FeedPage extends Component {
   }
 
   
-  render() { 
+  render() {
     return (
       <FPS.MainDiv>
           
@@ -102,7 +102,6 @@ class FeedPage extends Component {
           Ultimos Posts:
         </FPS.FeedContainerDisclaimer>
 
-          {console.log(this.props.posts)}
           {this.props.posts && this.props.posts.map(post => (
             <FPS.FeedContainer>
               <FPS.DivTeste1 onClick={() => this.props.goToPostPage(post.id)}>{post.title}</FPS.DivTeste1>
