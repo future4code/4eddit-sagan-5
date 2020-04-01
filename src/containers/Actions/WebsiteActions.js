@@ -106,6 +106,7 @@ export const addScore = (postID, userVoteDirection) => async (dispatch) => {
 			}
 		})
 		dispatch(getPosts())
+		dispatch(getPostDetails(postID))
 	} catch (error) {
 
 		console.log(error);
@@ -138,6 +139,7 @@ export const subScore = (postID, userVoteDirection) => async (dispatch) => {
 			}
 		})
 		dispatch(getPosts())
+		dispatch(getPostDetails(postID))
 	} catch (error) {
 
 		console.log(error);

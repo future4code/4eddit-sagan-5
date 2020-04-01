@@ -20,16 +20,16 @@ class PostPage extends Component {
   }
 
   componentDidMount() {
-    const { getPostDetails, goToLoginPage, goToFeedPage, selectedPostID, addScore } = this.props
+    const { getPostDetails, goToLoginPage, goToFeedPage, selectedPostID,} = this.props
 
 
     const token = window.localStorage.getItem("token");
 
-    if (token === null) {
+    if (token === null || token === undefined) {
       goToLoginPage();
     }
 
-    if (selectedPostID === null) {
+    if (selectedPostID === null || selectedPostID === undefined) {
       goToFeedPage();
     }
 
@@ -48,6 +48,7 @@ class PostPage extends Component {
         </Paper>
 
         <div>
+  
           {console.log(this.props.postDetails)}
     
           <h3>{this.props.postDetails && this.props.postDetails.title}</h3>
@@ -60,13 +61,13 @@ class PostPage extends Component {
 
             <PPS.DivTeste2>
               <IconButton aria-label="delete" size="small"  onClick={() => this.props.addScore(this.props.postDetails.id,this.props.postDetails.userVoteDirection)}>
-                <ThumbUpIcon fontSize="inherit" color={this.props.postDetails.userVoteDirection === 1 ? "primary": ""} />
+                <ThumbUpIcon fontSize="inherit" color={this.props.postDetails && this.props.postDetails.userVoteDirection === 1 ? "primary": ""} />
               </IconButton>
 
               {this.props.postDetails && this.props.postDetails.votesCount}
 
               <IconButton aria-label="delete" size="small"onClick={() => this.props.subScore(this.props.postDetails.id,this.props.postDetails.userVoteDirection)}>
-                <ThumbDownIcon fontSize="inherit" color={this.props.postDetails.userVoteDirection === -1 ? "secondary": ""} />
+                <ThumbDownIcon fontSize="inherit" color={this.props.postDetails && this.props.postDetails.userVoteDirection === -1 ? "secondary": ""} />
               </IconButton>
 
             </PPS.DivTeste2>
