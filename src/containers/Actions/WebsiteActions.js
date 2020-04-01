@@ -62,7 +62,9 @@ const setPostDetails = (postDetails) => ({
 })
 
 export const getPostDetails = (postID) => async (dispatch) => {
-	try {
+	try { 
+		const token = localStorage.getItem("token")
+
 		const response = await axios.get(`${baseURL}/posts/${postID}`, {
 			headers: {
 				auth: localStorage.getItem("token")
@@ -129,7 +131,6 @@ export const subScore = (postID, userVoteDirection) => async (dispatch) => {
 	}
 
 	try {
-		console.log(postID)
 		await axios.put(`${baseURL}/posts/${postID}/vote`,
 			{
 				direction
@@ -149,7 +150,6 @@ export const subScore = (postID, userVoteDirection) => async (dispatch) => {
 
 
 export const addScoreComment = (postID, userVoteDirection,commentID) => async (dispatch) => {
-	console.log("esse id é do comentario "+ commentID)
 	let direction = 1;
 	console.log(userVoteDirection)
 	if (userVoteDirection === 1) {
@@ -157,7 +157,6 @@ export const addScoreComment = (postID, userVoteDirection,commentID) => async (d
 	}
 
 	try {
-		console.log(postID)
 		await axios.put(`${baseURL}/posts/${postID}/comment/${commentID}/vote`,
 			{
 				direction
@@ -197,5 +196,29 @@ export const subScoreComment = (postID, userVoteDirection,commentID) => async (d
 
 		console.log(error);
 		alert('Erro ao tentar dar like')
+	}
+}
+
+const setAddComment = (postID, comment) => ({
+	type: 'ADD_COMMENT',
+	payload: {
+		postID,
+		comment
+	}
+})
+
+export const addComment = (postID, comment) => async (dispatch) => {
+	try {
+		await axios.post(`${baseURL}/posts/${postID}/comment`, {
+			headers: {
+				auth: localStorage.getItem("token")
+			},
+		})
+		alert('Comentario criado com sucesso!')
+		dispatch(getPostDetails())
+	}
+	catch (error) {
+		console.log(error)
+		alert('Erro ao tentar criar o comentario')
 	}
 }
