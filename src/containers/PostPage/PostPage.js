@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
-import { getPostDetails, addScore } from "../Actions/WebsiteActions";
+import { getPostDetails, addScore,subScore, addScoreComment,subScoreComment} from "../Actions/WebsiteActions";
 import Divider from '@material-ui/core/Divider';
 import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -59,14 +59,14 @@ class PostPage extends Component {
             <PPS.DivTeste3> {this.props.postDetails && this.props.postDetails.username}</PPS.DivTeste3>
 
             <PPS.DivTeste2>
-              <IconButton aria-label="delete" size="small">
-                <ThumbUpIcon onClick={() => this.props.addScore(this.props.selectedPostID)} fontSize="inherit" color="primary" />
+              <IconButton aria-label="delete" size="small"  onClick={() => this.props.addScore(this.props.postDetails.id,this.props.postDetails.userVoteDirection)}>
+                <ThumbUpIcon fontSize="inherit" color={this.props.postDetails.userVoteDirection === 1 ? "primary": ""} />
               </IconButton>
 
               {this.props.postDetails && this.props.postDetails.votesCount}
 
-              <IconButton aria-label="delete" size="small">
-                <ThumbDownIcon fontSize="inherit" color="secondary" />
+              <IconButton aria-label="delete" size="small"onClick={() => this.props.subScore(this.props.postDetails.id,this.props.postDetails.userVoteDirection)}>
+                <ThumbDownIcon fontSize="inherit" color={this.props.postDetails.userVoteDirection === -1 ? "secondary": ""} />
               </IconButton>
 
             </PPS.DivTeste2>
@@ -76,10 +76,30 @@ class PostPage extends Component {
 
 
         </div>
-
+        <h3>Comentarios</h3>
         <Divider />
 
-        <div>Aqui serao os comentarios</div>
+        <div>{this.props.postDetails.comments && this.props.postDetails.comments.map(comment =>(
+        <PPS.FeedContainer>
+              <PPS.DivTeste1 >{comment.text}</PPS.DivTeste1>
+
+              <PPS.DivTeste2>
+              <IconButton onClick={() => this.props.addScoreComment(this.props.selectedPostID,comment.userVoteDirection,comment.id)} aria-label="delete" size="small">
+                <ThumbUpIcon  fontSize="inherit" color={comment.userVoteDirection === 1 ? "primary": ""}/> 
+              </IconButton>
+
+                {comment.votesCount ? comment.votesCount : "0"}
+
+              <IconButton onClick={() => this.props.subScoreComment(this.props.selectedPostID,comment.userVoteDirection,comment.id)} aria-label="delete" size="small">
+                <ThumbDownIcon  fontSize="inherit" color={comment.userVoteDirection === -1 ? "secondary": ""} />
+              </IconButton>
+
+              </PPS.DivTeste2>
+
+              <PPS.DivTeste3>{comment.username}</PPS.DivTeste3>
+            </PPS.FeedContainer>
+         ))}
+        </div>
 
         <Paper elevation={3}>
           <PPS.Footer>
@@ -110,7 +130,10 @@ function mapDispatchToProps(dispatch) {
     goToDisclaimerPage: () => dispatch(push(routes.DisclaimerPage)),
     goToFeedPage: () => dispatch(push(routes.FeedPage)),
     getPostDetails: (postID) => dispatch(getPostDetails(postID)),
-   // addScore: (postID) => dispatch(addScore(postID)),
+    addScore: (postID,userVoteDirection) => dispatch(addScore(postID,userVoteDirection)),
+    subScore: (postID,userVoteDirection) => dispatch(subScore(postID,userVoteDirection)),
+    addScoreComment:(postID,userVoteDirection,commentID) => dispatch(addScoreComment(postID,userVoteDirection,commentID)),
+    subScoreComment:(postID,userVoteDirection,commentID) => dispatch(subScoreComment(postID,userVoteDirection,commentID)),
   }
 }
 

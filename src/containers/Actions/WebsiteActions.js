@@ -14,11 +14,11 @@ const setPosts = (posts) => ({
 
 export const getPosts = () => async (dispatch) => {
 	try {
-        const response = await axios.get(`${baseURL}/posts`, {
-            headers: {
-                auth: `${baseAuth}`
-            }
-        })
+		const response = await axios.get(`${baseURL}/posts`, {
+			headers: {
+				auth: localStorage.getItem("token")
+			}
+		})
 		dispatch(setPosts(response.data.posts))
 	} catch (error) {
 		console.log(error)
@@ -27,16 +27,16 @@ export const getPosts = () => async (dispatch) => {
 }
 
 export const createPost = (postData) => async (dispatch) => {
-	try{
+	try {
 		await axios.post(`${baseURL}/posts`, postData, {
 			headers: {
 				auth: localStorage.getItem("token")
-			}, 
+			},
 		})
 		alert('Post criado com sucesso!')
 		dispatch(getPosts())
 	}
-	catch (error){
+	catch (error) {
 		console.error(error)
 		alert('Erro ao tentar criar post')
 	}
@@ -63,10 +63,10 @@ const setPostDetails = (postDetails) => ({
 
 export const getPostDetails = (postID) => async (dispatch) => {
 	try {
-        const response = await axios.get(`${baseURL}/posts/${postID}`, {
-            headers: {
-                auth: localStorage.getItem("token")
-            }
+		const response = await axios.get(`${baseURL}/posts/${postID}`, {
+			headers: {
+				auth: localStorage.getItem("token")
+			}
 		})
 		console.log(response.data.post)
 		dispatch(setPostDetails(response.data.post))
@@ -87,28 +87,27 @@ const setAddScore = (postID) => ({
 	}
 })
 
-export const addScore = (postID,userVoteDirection) => async (dispatch) => {
-	debugger
+export const addScore = (postID, userVoteDirection) => async (dispatch) => {
+	
 	let direction = 1;
 	console.log(userVoteDirection)
-	if(userVoteDirection === 1){
+	if (userVoteDirection === 1) {
 		direction = 0;
-   }
-	
+	}
+
 	try {
 		console.log(postID)
-		 await axios.put(`${baseURL}/posts/${postID}/vote`, 
-		{
-			direction	
-		},{
-            headers: {
-                auth: localStorage.getItem("token")
-            }
+		await axios.put(`${baseURL}/posts/${postID}/vote`,
+			{
+				direction
+			}, {
+			headers: {
+				auth: localStorage.getItem("token")
+			}
 		})
-		alert('Like dado com sucesso!')
 		dispatch(getPosts())
 	} catch (error) {
-	
+
 		console.log(error);
 		alert('Erro ao tentar dar like')
 	}
@@ -120,31 +119,80 @@ const setSubScore = (postID) => ({
 	}
 })
 
-export const subScore = (postID,userVoteDirection) => async (dispatch) => {
+export const subScore = (postID, userVoteDirection) => async (dispatch) => {
 	let direction = -1
-	debugger
+	
 	console.log(userVoteDirection)
-	if(userVoteDirection === -1){
-		 direction = 0;
+	if (userVoteDirection === -1) {
+		direction = 0;
 	}
-	
-		
-	
-	
+
 	try {
 		console.log(postID)
-		 await axios.put(`${baseURL}/posts/${postID}/vote`, 
-		{
-			direction	
-		},{
-            headers: {
-                auth: localStorage.getItem("token")
-            }
+		await axios.put(`${baseURL}/posts/${postID}/vote`,
+			{
+				direction
+			}, {
+			headers: {
+				auth: localStorage.getItem("token")
+			}
 		})
-		alert('Like dado com sucesso!')
 		dispatch(getPosts())
 	} catch (error) {
+
+		console.log(error);
+		alert('Erro ao tentar dar like')
+	}
+}
+
+
+export const addScoreComment = (postID, userVoteDirection,commentID) => async (dispatch) => {
+	console.log("esse id é do comentario "+ commentID)
+	let direction = 1;
+	console.log(userVoteDirection)
+	if (userVoteDirection === 1) {
+		direction = 0;
+	}
+
+	try {
+		console.log(postID)
+		await axios.put(`${baseURL}/posts/${postID}/comment/${commentID}/vote`,
+			{
+				direction
+			}, {
+			headers: {
+				auth: localStorage.getItem("token")
+			}
+		})
+		dispatch(getPostDetails(postID))
+	} catch (error) {
+
+		console.log(error);
+		alert('Erro ao tentar dar like')
+	}
+}
+export const subScoreComment = (postID, userVoteDirection,commentID) => async (dispatch) => {
+	console.log("esse id é do comentario "+ commentID)
 	
+	let direction = -1;
+	console.log(userVoteDirection)
+	if (userVoteDirection === -1) {
+		direction = 0;
+	}
+
+	try {
+		console.log(postID)
+		await axios.put(`${baseURL}/posts/${postID}/comment/${commentID}/vote`,
+			{
+				direction
+			}, {
+			headers: {
+				auth: localStorage.getItem("token")
+			}
+		})
+		dispatch(getPostDetails(postID))
+	} catch (error) {
+
 		console.log(error);
 		alert('Erro ao tentar dar like')
 	}

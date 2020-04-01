@@ -45,7 +45,6 @@ class FeedPage extends Component {
     });
   };
 
-
   // ----------------- Nao consegui verificar se o usuario esta logado ou nao -----------------
   userNotLogin = (event) => {
     if(window.localStorage === null) {
@@ -103,21 +102,20 @@ class FeedPage extends Component {
           Ultimos Posts:
         </FPS.FeedContainerDisclaimer>
 
- 
-          {this.props.posts.map(post => (
+          {console.log(this.props.posts)}
+          {this.props.posts && this.props.posts.map(post => (
             <FPS.FeedContainer>
               <FPS.DivTeste1 onClick={() => this.props.goToPostPage(post.id)}>{post.title}</FPS.DivTeste1>
 
               <FPS.DivTeste2>
               <IconButton aria-label="delete" size="small">
-                <ThumbUpIcon onClick={()=>this.props.addScore(post.id,post.userVoteDirection)} fontSize="inherit" color="primary"/> 
+                <ThumbUpIcon onClick={()=>this.props.addScore(post.id,post.userVoteDirection)} fontSize="inherit" color={post.userVoteDirection === 1 ? "primary": ""} /> 
               </IconButton>
 
                 {post.votesCount}
 
               <IconButton aria-label="delete" size="small">
-                <ThumbDownIcon onClick={()=>this.props.subScore(post.id,post.userVoteDirection)} fontSize="inherit" color="secondary" /> {post.userVoteDirection}
-                {console.log(post)}
+                <ThumbDownIcon onClick={()=>this.props.subScore(post.id,post.userVoteDirection)} fontSize="inherit" color={post.userVoteDirection === -1 ? "secondary": ""} />
               </IconButton>
 
               </FPS.DivTeste2>
