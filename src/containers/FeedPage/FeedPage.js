@@ -11,7 +11,7 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
-import { getPosts, createPost, setSelectedPostIDAndPush } from '../Actions/WebsiteActions';
+import { getPosts, createPost, setSelectedPostIDAndPush,addScore,getPostDetails,subScore } from '../Actions/WebsiteActions';
 
 
 class FeedPage extends Component {
@@ -110,13 +110,14 @@ class FeedPage extends Component {
 
               <FPS.DivTeste2>
               <IconButton aria-label="delete" size="small">
-                <ThumbUpIcon onClick={this.userNotLogin} fontSize="inherit" color="primary"/>
+                <ThumbUpIcon onClick={()=>this.props.addScore(post.id,post.userVoteDirection)} fontSize="inherit" color="primary"/> 
               </IconButton>
 
                 {post.votesCount}
 
               <IconButton aria-label="delete" size="small">
-                <ThumbDownIcon onClick={this.userNotLogin} fontSize="inherit" color="secondary" />
+                <ThumbDownIcon onClick={()=>this.props.subScore(post.id,post.userVoteDirection)} fontSize="inherit" color="secondary" /> {post.userVoteDirection}
+                {console.log(post)}
               </IconButton>
 
               </FPS.DivTeste2>
@@ -142,7 +143,8 @@ class FeedPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  posts: state.posts.postList
+  posts: state.posts.postList,
+  selectedPostID: state.posts.selectedPostID,
 })
 
 function mapDispatchToProps(dispatch){
@@ -151,6 +153,9 @@ function mapDispatchToProps(dispatch){
         goToPostPage: (postID) => dispatch(setSelectedPostIDAndPush(postID)),
         getPosts: () => dispatch(getPosts()),
         createPost: (postData) => dispatch(createPost(postData)),
+        addScore: (postID,userVoteDirection) => dispatch(addScore(postID,userVoteDirection)),
+        subScore: (postID,userVoteDirection) => dispatch(subScore(postID,userVoteDirection)),
+        getPostDetails: (postID,userVoteDirection) => dispatch(getPostDetails(postID,userVoteDirection))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps) (FeedPage)
