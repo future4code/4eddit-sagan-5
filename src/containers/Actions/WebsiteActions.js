@@ -16,7 +16,7 @@ export const getPosts = () => async (dispatch) => {
 	try {
         const response = await axios.get(`${baseURL}/posts`, {
             headers: {
-                auth: `${baseAuth}`
+                auth: localStorage.getItem("token")
             }
         })
 		dispatch(setPosts(response.data.posts))

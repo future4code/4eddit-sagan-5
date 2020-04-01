@@ -103,7 +103,7 @@ class FeedPage extends Component {
           Ultimos Posts:
         </FPS.FeedContainerDisclaimer>
 
- 
+          {console.log(this.props.posts)}
           {this.props.posts.map(post => (
             <FPS.FeedContainer>
               <FPS.DivTeste1 onClick={() => this.props.goToPostPage(post.id)}>{post.title}</FPS.DivTeste1>
@@ -116,8 +116,7 @@ class FeedPage extends Component {
                 {post.votesCount}
 
               <IconButton aria-label="delete" size="small">
-                <ThumbDownIcon onClick={()=>this.props.subScore(post.id,post.userVoteDirection)} fontSize="inherit" color="secondary" /> {post.userVoteDirection}
-                {console.log(post)}
+                <ThumbDownIcon onClick={()=>this.props.subScore(post.id,post.userVoteDirection)} fontSize="inherit" color="secondary" />
               </IconButton>
 
               </FPS.DivTeste2>
