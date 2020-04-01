@@ -82,21 +82,22 @@ export const setSelectedPostID = (postID) => async (dispatch) => {
 
 const setAddScore = (postID) => ({
 	type: 'ADD_SCORE',
-	payload: postID
-	
+	payload: {
+		postID
+	}
 })
 
 export const addScore = (postID) => async (dispatch) => {
 	try {
 		console.log(postID)
-        const response = await axios.put(`${baseURL}/posts/${postID}/vote`, {
+        await axios.put(`${baseURL}/posts/${postID}/vote`, {
 			Body: {"direction": 1},
             headers: {
                 auth: localStorage.getItem("token")
             }
 		})
-		dispatch()
-		
+		dispatch(setAddScore(postID))
+		alert('Like dado com sucesso!')
 	} catch (error) {
 		console.log(error)
 		alert('Erro ao tentar dar like')

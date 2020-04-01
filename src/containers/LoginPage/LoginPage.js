@@ -8,6 +8,7 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
 import { signup, login } from '../Actions/Auth';
+import Divider from '@material-ui/core/Divider';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -15,12 +16,14 @@ class LoginPage extends Component {
     this.state = {
       email: "",
       password: "",
-      username: "",
+      signupEmail: "",
+      signupPassword: "",
+      signupUsername: "",
       selectedButton: "",
     };
   }
 
-  handleSignupLoginButtonClick = (param) =>{
+  handleSignupLoginButtonClick = (param) => {
     this.setState({
       selectedButton: param
     })
@@ -32,78 +35,117 @@ class LoginPage extends Component {
     });
   };
 
-  handleLogin = (event) =>{
+  handleLogin = (event) => {
     event.preventDefault();
 
-    const { email, password, username } = this.state
+    const { email, password } = this.state
 
-    console.log(this.state.selectedButton)
+    this.props.login(email, password)
+  }
 
-    if(this.state.selectedButton === 'login'){
-      this.props.login(email, password)
-    }
+  handleSignup = (event) => {
+    event.preventDefault();
 
-    if(this.state.selectedButton === 'signup'){
-      this.props.signup(email, password, username)
-    }
+    const { signupEmail, signupPassword, signupUsername } = this.state
+
+    this.props.signup(signupEmail, signupPassword, signupUsername)
+
+    this.setState({
+      signupEmail: "",
+      signupPassword: "",
+      signupUsername: "",
+    })
   }
 
   render() {
-    const { email, password, username } = this.state; 
+    const { email, password, signupEmail, signupPassword, signupUsername } = this.state;
 
     return (
       <LPS.MainDiv>
 
         <Paper elevation={3}>
-        <LPS.CustomHeader>
-          <LPS.SmallLogo onClick={this.props.goToHomePage} src="https://image.flaticon.com/icons/png/512/52/52053.png"/>
-          <LPS.MidLogo src={MidLogo}/>
-        </LPS.CustomHeader>
+          <LPS.CustomHeader>
+            <LPS.SmallLogo onClick={this.props.goToHomePage} src="https://image.flaticon.com/icons/png/512/52/52053.png" />
+            <LPS.MidLogo src={MidLogo} />
+          </LPS.CustomHeader>
         </Paper>
 
-        <LPS.LoginWrapper  onSubmit={this.handleLogin}>
+        <LPS.LoginDivider>
 
-          <TextField
-            onChange={this.handleFieldChange}
-            name="email"
-            type="email"
-            label="E-mail"
-            required
-            value={email}
-          />
+          <LPS.LoginWrapper onSubmit={this.handleSignup}>
 
-          <TextField
-            onChange={this.handleFieldChange}
-            name="password"
-            type="password"
-            label="Password"
-            required
-            value={password}
-          />
+            <h4>Não tem conta ainda? crie uma agora, é rápido e fácil!</h4>
 
-          <TextField
-            onChange={this.handleFieldChange}
-            name="username"
-            type="username"
-            label="Username"
-            value={username}
-          />
+            <TextField
+              onChange={this.handleFieldChange}
+              name="signupEmail"
+              type="email"
+              label="E-mail"
+              required
+              value={signupEmail}
+            />
 
-          <Button onClick={() => this.handleSignupLoginButtonClick('login')} type="submit">Login</Button>
+            <TextField
+              onChange={this.handleFieldChange}
+              name="signupPassword"
+              type="password"
+              label="Password"
+              required
+              value={signupPassword}
+            />
 
-          <Button onClick={() => this.handleSignupLoginButtonClick('signup')} type="submit">Cadastrar</Button>
+            <TextField
+              onChange={this.handleFieldChange}
+              name="signupUsername"
+              type="username"
+              label="Username"
+              value={signupUsername}
+              required
+            />
 
-        </LPS.LoginWrapper>
+            <Button variant="contained" type="submit">Cadastrar</Button>
+
+          </LPS.LoginWrapper>
+
+          <Divider orientation="vertical" flexItem/>
+
+          <LPS.LoginWrapper onSubmit={this.handleLogin}>
+
+            <h4>Já criou uma conta? Entre aqui!</h4>
+
+            <TextField
+              onChange={this.handleFieldChange}
+              name="email"
+              type="email"
+              label="E-mail"
+              required
+              value={email}
+            />
+
+            <TextField
+              onChange={this.handleFieldChange}
+              name="password"
+              type="password"
+              label="Password"
+              required
+              value={password}
+            />
+
+            <Button variant="contained" type="submit">Login</Button>
+
+          </LPS.LoginWrapper>
+
+        </LPS.LoginDivider>
 
         <Paper elevation={3}>
-        <LPS.Footer>
-          <h3>Para mais informações favor entrar em contato com qualquer uma de nossas redes sociais:</h3>
-          <LPS.FooterLogo src="https://i2.wp.com/www.multarte.com.br/wp-content/uploads/2019/03/logo-facebook-png5.png?fit=696%2C624&ssl=1" />
-          <LPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2014/09/twitter-logo-1-1.png" />
-          <LPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/04/instagram-logo.png" />
-          <LPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/11/discord-logo-01.png" />
-          <LPS.FooterLogo src="https://images.vexels.com/media/users/3/137382/isolated/preview/c59b2807ea44f0d70f41ca73c61d281d-linkedin-icon-logo-by-vexels.png" />
-        </LPS.Footer>
+          <LPS.Footer>
+            <h3>Para mais informações favor entrar em contato com qualquer uma de nossas redes sociais:</h3>
+            <LPS.FooterLogo src="https://i2.wp.com/www.multarte.com.br/wp-content/uploads/2019/03/logo-facebook-png5.png?fit=696%2C624&ssl=1" />
+            <LPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2014/09/twitter-logo-1-1.png" />
+            <LPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/04/instagram-logo.png" />
+            <LPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/11/discord-logo-01.png" />
+            <LPS.FooterLogo src="https://images.vexels.com/media/users/3/137382/isolated/preview/c59b2807ea44f0d70f41ca73c61d281d-linkedin-icon-logo-by-vexels.png" />
+          </LPS.Footer>
         </Paper>
 
       </LPS.MainDiv>
@@ -111,11 +153,11 @@ class LoginPage extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return{
-      goToHomePage: () => dispatch(push(routes.HomePage)),
-      signup: (email, password, username) => dispatch(signup(email, password, username)),
-      login: (email, password) => dispatch(login(email, password)),
+function mapDispatchToProps(dispatch) {
+  return {
+    goToHomePage: () => dispatch(push(routes.HomePage)),
+    signup: (email, password, username) => dispatch(signup(email, password, username)),
+    login: (email, password) => dispatch(login(email, password)),
   }
 }
-export default connect(null, mapDispatchToProps) (LoginPage)
+export default connect(null, mapDispatchToProps)(LoginPage)
