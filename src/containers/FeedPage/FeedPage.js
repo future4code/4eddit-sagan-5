@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import * as FPS from "./FeedPageStyles";
+import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import InfoIcon from '@material-ui/icons/Info';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -27,9 +31,24 @@ class FeedPage extends Component {
     this.props.getPosts();
   }
 
+  loginLogout = () => {
+    const token = window.localStorage.getItem("token");
+
+    if (token === null || token === undefined) {
+      if(window.confirm("Deseja fazer o login?")){
+        this.props.goToLoginPage();
+      }
+    }
+    else{
+      if(window.confirm("Deseja sair de sua conta?")){
+        localStorage.clear();
+        this.props.goToHomePage();
+      }
+    }
+  }
+
   handleNewPost = (event) =>{
     event.preventDefault();
-
 
     const postData = {
       title: this.state.postTitle,
@@ -45,21 +64,45 @@ class FeedPage extends Component {
     });
   };
 
-  // ----------------- Nao consegui verificar se o usuario esta logado ou nao -----------------
-  userNotLogin = (event) => {
-    if(window.localStorage === null) {
-      alert("Você ainda não está logado. Por favor faça o login ou crie um cadastro =)")
+  checkLoginAndLike = (postID, voteDirection) => {
+    const token = window.localStorage.getItem("token");
+
+    if (token === null || token === undefined){
+      if(window.confirm('Você precisa estar logado para utilizar essa função. (Like/Dislike) \n Deseja logar agora?')){
+        this.props.goToLoginPage();
+      }
+    }
+    else{
+      this.props.addScore(postID, voteDirection)
     }
   }
 
-  
+  checkLoginAndDislike = (postID, voteDirection) => {
+    const token = window.localStorage.getItem("token");
+
+    if (token === null || token === undefined){
+      if(window.confirm('Você precisa estar logado para utilizar essa função. (Like/Dislike) \n Deseja logar agora?')){
+        this.props.goToLoginPage();
+      }
+    }
+    else{
+      this.props.subScore(postID, voteDirection)
+    }
+  }
+
   render() {
     return (
+      <>
       <FPS.MainDiv>
-          
         <Paper elevation={3}>
         <FPS.CustomHeader>
           <FPS.SmallLogo onClick={this.props.goToHomePage} src="https://image.flaticon.com/icons/png/512/52/52053.png"/>
+          <FPS.HeaderLinks>
+            <FPS.HeaderLink><AccountCircleIcon onClick={this.props.goToUserPage}/></FPS.HeaderLink>
+            <FPS.HeaderLink><InfoIcon onClick={this.props.goToDisclaimerPage}/></FPS.HeaderLink>
+            <FPS.HeaderLink><ListAltRoundedIcon onClick={this.props.goToFeedPage}/></FPS.HeaderLink>
+            <FPS.HeaderLink><ExitToAppRoundedIcon onClick={this.loginLogout}/></FPS.HeaderLink>
+          </FPS.HeaderLinks>
           <FPS.MidLogo src={MidLogo}/>
         </FPS.CustomHeader>
         </Paper>
@@ -104,37 +147,36 @@ class FeedPage extends Component {
 
           {this.props.posts && this.props.posts.map(post => (
             <FPS.FeedContainer>
-              <FPS.DivTeste1 onClick={() => this.props.goToPostPage(post.id)}>{post.title}</FPS.DivTeste1>
+              <FPS.PostTitle onClick={() => this.props.goToPostPage(post.id)}>{post.title}</FPS.PostTitle>
 
-              <FPS.DivTeste2>
+              <FPS.PostScore>
               <IconButton aria-label="delete" size="small">
-                <ThumbUpIcon onClick={()=>this.props.addScore(post.id,post.userVoteDirection)} fontSize="inherit" color={post.userVoteDirection === 1 ? "primary": ""} /> 
+                <ThumbUpIcon onClick={() => this.checkLoginAndLike(post.id, post.userVoteDirection)} fontSize="inherit" color={post.userVoteDirection === 1 ? "primary": ""} /> 
               </IconButton>
 
                 {post.votesCount}
 
               <IconButton aria-label="delete" size="small">
-                <ThumbDownIcon onClick={()=>this.props.subScore(post.id,post.userVoteDirection)} fontSize="inherit" color={post.userVoteDirection === -1 ? "secondary": ""} />
+                <ThumbDownIcon onClick={() => this.checkLoginAndDislike(post.id, post.userVoteDirection)} fontSize="inherit" color={post.userVoteDirection === -1 ? "secondary": ""} />
               </IconButton>
 
-              </FPS.DivTeste2>
+              </FPS.PostScore>
 
-              <FPS.DivTeste3>{post.username}</FPS.DivTeste3>
+              <FPS.PostAuthor>{post.username}</FPS.PostAuthor>
             </FPS.FeedContainer>
           ))}
-
-        <Paper elevation={3}>
+      </FPS.MainDiv>
+      <Paper elevation={3}>
         <FPS.Footer>
           <h3>Para mais informações favor entrar em contato com qualquer uma de nossas redes sociais:</h3>
-          <FPS.FooterLogo src="https://i2.wp.com/www.multarte.com.br/wp-content/uploads/2019/03/logo-facebook-png5.png?fit=696%2C624&ssl=1" />
-          <FPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2014/09/twitter-logo-1-1.png" />
-          <FPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/04/instagram-logo.png" />
-          <FPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/11/discord-logo-01.png" />
-          <FPS.FooterLogo src="https://images.vexels.com/media/users/3/137382/isolated/preview/c59b2807ea44f0d70f41ca73c61d281d-linkedin-icon-logo-by-vexels.png" />
+          <FPS.FooterLink href="https://www.facebook.com/" target="_blank">  <FPS.FooterLogo src="https://i2.wp.com/www.multarte.com.br/wp-content/uploads/2019/03/logo-facebook-png5.png?fit=696%2C624&ssl=1" /></FPS.FooterLink>
+          <FPS.FooterLink href="https://www.twitter.com/" target="_blank">   <FPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2014/09/twitter-logo-1-1.png" /> </FPS.FooterLink>
+          <FPS.FooterLink href="https://www.instagram.com/" target="_blank"> <FPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/04/instagram-logo.png" /> </FPS.FooterLink>
+          <FPS.FooterLink href="https://www.discord.com/" target="_blank">   <FPS.FooterLogo src="https://logodownload.org/wp-content/uploads/2017/11/discord-logo-01.png" /> </FPS.FooterLink>
+          <FPS.FooterLink href="https://www.linkedin.com/" target="_blank">  <FPS.FooterLogo src="https://images.vexels.com/media/users/3/137382/isolated/preview/c59b2807ea44f0d70f41ca73c61d281d-linkedin-icon-logo-by-vexels.png" /> </FPS.FooterLink>
         </FPS.Footer>
         </Paper>
-
-      </FPS.MainDiv>
+      </>
     );
   }
 }
@@ -147,6 +189,10 @@ const mapStateToProps = (state) => ({
 function mapDispatchToProps(dispatch){
     return{
         goToHomePage: () => dispatch(push(routes.HomePage)),
+        goToUserPage: () => dispatch(push(routes.UserPage)),
+        goToFeedPage: () => dispatch(push(routes.FeedPage)),
+        goToDisclaimerPage: () => dispatch(push(routes.DisclaimerPage)),
+        goToLoginPage: () => dispatch(push(routes.LoginPage)),
         goToPostPage: (postID) => dispatch(setSelectedPostIDAndPush(postID)),
         getPosts: () => dispatch(getPosts()),
         createPost: (postData) => dispatch(createPost(postData)),

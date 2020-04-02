@@ -3,7 +3,7 @@ import { push } from "connected-react-router";
 import { routes } from '../Router';
 
 const baseURL = 'https://us-central1-future-apis.cloudfunctions.net/fourEddit'
-const baseAuth = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlphR1dLRWRjZXlaWjlORkxPUGgxIiwiZW1haWwiOiJwZWRyby5kYXJ2YXNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJkYXJ2YXMiLCJpYXQiOjE1NzM1Nzk5MTd9.sKiIIRgiQm2qesnrNmFujNlXF02ytx-IvLKnNFHqXgA'
+const baseAuth = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im5VVGpvcks3bDM4SjNmSjFZa3FlIiwidXNlcm5hbWUiOiJsZW9lbWFpbHRlc3RleDEiLCJlbWFpbCI6Imxlb2VtYWlsdGVzdGV4MUBnbWFpbC5jb20iLCJpYXQiOjE1ODU4Mzc4NTh9.qCZlmCJuJvDfvmGhlFNmr28ndhgrtVYsAxrnx1cwUNg'
 
 const setPosts = (posts) => ({
 	type: 'SET_POSTS',
@@ -13,12 +13,13 @@ const setPosts = (posts) => ({
 })
 
 export const getPosts = () => async (dispatch) => {
+	const token = localStorage.getItem("token")
+
 	try {
-		const response = await axios.get(`${baseURL}/posts`, {
-			headers: {
-				auth: localStorage.getItem("token")
-			}
-		})
+		const response = await axios.get(`${baseURL}/posts`, 
+
+		{ headers: { auth: token ? token : baseAuth } })
+
 		dispatch(setPosts(response.data.posts))
 	} catch (error) {
 		console.log(error)
@@ -28,11 +29,10 @@ export const getPosts = () => async (dispatch) => {
 
 export const createPost = (postData) => async (dispatch) => {
 	try {
-		await axios.post(`${baseURL}/posts`, postData, {
-			headers: {
-				auth: localStorage.getItem("token")
-			},
-		})
+		await axios.post(`${baseURL}/posts`, postData, 
+
+		{ headers: { auth: localStorage.getItem("token") }, })
+
 		alert('Post criado com sucesso!')
 		dispatch(getPosts())
 	}
@@ -63,11 +63,10 @@ const setPostDetails = (postDetails) => ({
 
 export const getPostDetails = (postID) => async (dispatch) => {
 	try {
-		const response = await axios.get(`${baseURL}/posts/${postID}`, {
-			headers: {
-				auth: localStorage.getItem("token")
-			}
-		})
+		const response = await axios.get(`${baseURL}/posts/${postID}`, 
+
+		{ headers: { auth: localStorage.getItem("token") } })
+
 		dispatch(setPostDetails(response.data.post))
 	} catch (error) {
 		console.log(error)
@@ -80,26 +79,20 @@ export const setSelectedPostID = (postID) => async (dispatch) => {
 }
 
 export const addScore = (postID, userVoteDirection) => async (dispatch) => {
-	
 	let direction = 1;	
 	if (userVoteDirection === 1) {
 		direction = 0;
 	}
 
 	try {
-		console.log(postID)
 		await axios.put(`${baseURL}/posts/${postID}/vote`,
-			{
-				direction
-			}, {
-			headers: {
-				auth: localStorage.getItem("token")
-			}
-		})
+			{ direction }, 
+
+			{ headers: { auth: localStorage.getItem("token") } })
+
 		dispatch(getPosts())
 		dispatch(getPostDetails(postID))
 	} catch (error) {
-
 		console.log(error);
 		alert('Erro ao tentar dar like')
 	}
@@ -107,21 +100,16 @@ export const addScore = (postID, userVoteDirection) => async (dispatch) => {
 
 export const subScore = (postID, userVoteDirection) => async (dispatch) => {
 	let direction = -1
-	
-	
 	if (userVoteDirection === -1) {
 		direction = 0;
 	}
 
 	try {
 		await axios.put(`${baseURL}/posts/${postID}/vote`,
-			{
-				direction
-			}, {
-			headers: {
-				auth: localStorage.getItem("token")
-			}
-		})
+			{ direction }, 
+
+			{ headers: { auth: localStorage.getItem("token") } })
+
 		dispatch(getPosts())
 		dispatch(getPostDetails(postID))
 	} catch (error) {
@@ -140,39 +128,28 @@ export const addScoreComment = (postID, userVoteDirection,commentID) => async (d
 
 	try {
 		await axios.put(`${baseURL}/posts/${postID}/comment/${commentID}/vote`,
-			{
-				direction
-			}, {
-			headers: {
-				auth: localStorage.getItem("token")
-			}
-		})
+			{ direction }, 
+
+			{ headers: { auth: localStorage.getItem("token") } })
+
 		dispatch(getPostDetails(postID))
 	} catch (error) {
-
 		console.log(error);
 		alert('Erro ao tentar dar like')
 	}
 }
 export const subScoreComment = (postID, userVoteDirection,commentID) => async (dispatch) => {
-	console.log("esse id é do comentario "+ commentID)
-	
 	let direction = -1;
-	console.log(userVoteDirection)
 	if (userVoteDirection === -1) {
 		direction = 0;
 	}
 
 	try {
-		console.log(postID)
 		await axios.put(`${baseURL}/posts/${postID}/comment/${commentID}/vote`,
-			{
-				direction
-			}, {
-			headers: {
-				auth: localStorage.getItem("token")
-			}
-		})
+			{ direction }, 
+
+			{ headers: { auth: localStorage.getItem("token") } })
+
 		dispatch(getPostDetails(postID))
 	} catch (error) {
 
@@ -183,12 +160,11 @@ export const subScoreComment = (postID, userVoteDirection,commentID) => async (d
 
 export const addComment = (postID, text) => async (dispatch) => {
 	try {
-		await axios.post(`${baseURL}/posts/${postID}/comment`, {
-			text,
-		},{
-		headers: {
-			auth: localStorage.getItem("token")
-		},
+		await axios.post(`${baseURL}/posts/${postID}/comment`, 
+		{ text },
+
+		{headers: { auth: localStorage.getItem("token") },
+
 		})
 		alert('Comentario criado com sucesso!')
 		dispatch(getPostDetails(postID))
