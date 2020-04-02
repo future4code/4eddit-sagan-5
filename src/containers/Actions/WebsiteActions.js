@@ -62,15 +62,12 @@ const setPostDetails = (postDetails) => ({
 })
 
 export const getPostDetails = (postID) => async (dispatch) => {
-	try { 
-		const token = localStorage.getItem("token")
-
+	try {
 		const response = await axios.get(`${baseURL}/posts/${postID}`, {
 			headers: {
 				auth: localStorage.getItem("token")
 			}
 		})
-		console.log(response.data.post)
 		dispatch(setPostDetails(response.data.post))
 	} catch (error) {
 		console.log(error)
@@ -82,17 +79,9 @@ export const setSelectedPostID = (postID) => async (dispatch) => {
 	dispatch(setSelectedPost(postID))
 }
 
-const setAddScore = (postID) => ({
-	type: 'ADD_SCORE',
-	payload: {
-		postID
-	}
-})
-
 export const addScore = (postID, userVoteDirection) => async (dispatch) => {
 	
-	let direction = 1;
-	console.log(userVoteDirection)
+	let direction = 1;	
 	if (userVoteDirection === 1) {
 		direction = 0;
 	}
@@ -115,17 +104,11 @@ export const addScore = (postID, userVoteDirection) => async (dispatch) => {
 		alert('Erro ao tentar dar like')
 	}
 }
-const setSubScore = (postID) => ({
-	type: 'SUB_SCORE',
-	payload: {
-		postID
-	}
-})
 
 export const subScore = (postID, userVoteDirection) => async (dispatch) => {
 	let direction = -1
 	
-	console.log(userVoteDirection)
+	
 	if (userVoteDirection === -1) {
 		direction = 0;
 	}
@@ -150,8 +133,7 @@ export const subScore = (postID, userVoteDirection) => async (dispatch) => {
 
 
 export const addScoreComment = (postID, userVoteDirection,commentID) => async (dispatch) => {
-	let direction = 1;
-	console.log(userVoteDirection)
+	let direction = 1;	
 	if (userVoteDirection === 1) {
 		direction = 0;
 	}
@@ -199,23 +181,17 @@ export const subScoreComment = (postID, userVoteDirection,commentID) => async (d
 	}
 }
 
-const setAddComment = (postID, comment) => ({
-	type: 'ADD_COMMENT',
-	payload: {
-		postID,
-		comment
-	}
-})
-
-export const addComment = (postID, comment) => async (dispatch) => {
+export const addComment = (postID, text) => async (dispatch) => {
 	try {
 		await axios.post(`${baseURL}/posts/${postID}/comment`, {
-			headers: {
-				auth: localStorage.getItem("token")
-			},
+			text,
+		},{
+		headers: {
+			auth: localStorage.getItem("token")
+		},
 		})
 		alert('Comentario criado com sucesso!')
-		dispatch(getPostDetails())
+		dispatch(getPostDetails(postID))
 	}
 	catch (error) {
 		console.log(error)
