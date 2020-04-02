@@ -10,8 +10,19 @@ export const GlobalStyle = createGlobalStyle`
 export const CustomHeader = styled.div`
     padding: 5px 15px 5px 10px;
     background-color: rgb(230,230,230);
-    display: flex;
-    justify-content: space-between;
+    text-align: left;
+`
+
+export const HeaderLink = styled.span`
+    cursor: pointer;
+    margin-left: 3px;
+    margin-right: 3px;
+`
+
+export const HeaderLinks = styled.div`
+    display: inline;
+    margin-left: 3px;
+    margin-right: 76%;
 `
 
 export const SmallLogo = styled.img`
@@ -19,6 +30,7 @@ export const SmallLogo = styled.img`
     height: 40px;
     width: 40px;
     cursor: pointer;
+    margin-right: 5px;
 `
 
 export const MidLogo = styled.img`
@@ -29,17 +41,24 @@ export const MidLogo = styled.img`
 export const MainDiv = styled.div`
     background-color: rgb(240,240,240);
     text-align: center;
+    min-height: 80vh;
 `
 
 export const Footer = styled.div`
     padding: 20px;
     background-color: rgb(230,230,230);
+    text-align: center;
+`
+
+export const FooterLink = styled.a`
+     color: transparent;
+     text-decoration: none;
 `
 
 export const FooterLogo = styled.img`
-    margin: 10px;
     height: 35px;
     width: 40px;
+    margin: 5px;
 `
 
 export const FeedContainer = styled.div`
