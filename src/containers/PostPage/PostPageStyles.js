@@ -68,14 +68,14 @@ export const DivTeste3 = styled.div`
     border-radius: 10px;
 `
 
-export const NewPostDisclaimer = styled.h3`
+export const NewCommentDisclaimer = styled.h3`
     padding: 0;
     margin-top: 15px;
     margin-bottom: -10px;
     text-decoration: underline;
 `
 
-export const NewPostContainer = styled.form`
+export const NewCommentContainer = styled.form`
     padding: 0 40px 0 40px;
     margin-bottom: 20px;
 `

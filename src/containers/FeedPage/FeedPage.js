@@ -49,7 +49,7 @@ class FeedPage extends Component {
   userNotLogin = (event) => {
     if(window.localStorage === null) {
       alert("Você ainda não está logado. Por favor faça o login ou crie um cadastro =)")
-    }    
+    }
   }
 
   

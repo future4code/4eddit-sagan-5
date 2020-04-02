@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from '../Router';
 import Paper from '@material-ui/core/Paper';
-import { getPostDetails, addScore, subScore, addScoreComment, subScoreComment } from "../Actions/WebsiteActions";
+import { getPostDetails, addScore, subScore, addScoreComment, subScoreComment, addComment } from "../Actions/WebsiteActions";
 import Divider from '@material-ui/core/Divider';
 import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -41,11 +41,21 @@ class PostPage extends Component {
     getPostDetails(selectedPostID)
   }
 
+  handleNewComment = (event) =>{
+    event.preventDefault();
+
+    this.props.addComment(this.props.selectedPostID, this.state.commentBody)
+  }
+
   handleFieldChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
+
+  funcaoTeste = ()=> {
+    console.log(this.props.selectedPostID)
+  }
 
   render() {
     return (
@@ -84,11 +94,11 @@ class PostPage extends Component {
 
           </PPS.FeedContainer>
 
-          <PPS.NewPostDisclaimer>
+          <PPS.NewCommentDisclaimer>
             Adicione um comentario! :D
-        </PPS.NewPostDisclaimer>
+        </PPS.NewCommentDisclaimer>
 
-          <PPS.NewPostContainer>
+          <PPS.NewCommentContainer onSubmit={this.handleNewComment}>
 
             <TextField
               onChange={this.handleFieldChange}
@@ -104,7 +114,7 @@ class PostPage extends Component {
 
             <Button type="submit" variant="contained" color="primary" size="small">Postar</Button>
 
-          </PPS.NewPostContainer>
+          </PPS.NewCommentContainer>
 
           <Divider />
 
@@ -168,6 +178,7 @@ function mapDispatchToProps(dispatch) {
     subScore: (postID, userVoteDirection) => dispatch(subScore(postID, userVoteDirection)),
     addScoreComment: (postID, userVoteDirection, commentID) => dispatch(addScoreComment(postID, userVoteDirection, commentID)),
     subScoreComment: (postID, userVoteDirection, commentID) => dispatch(subScoreComment(postID, userVoteDirection, commentID)),
+    addComment: (postID, commentData) => dispatch(addComment (postID, commentData)),
   }
 }
 
