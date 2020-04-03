@@ -81,7 +81,15 @@ export const FeedContainerDisclaimer = styled.h2`
 
 export const FeedContainer = styled.div`
     display: grid;
-    grid-template-columns: 5fr 1fr 1fr;
+    grid-template-columns: 4fr 0.3fr 0.4fr 0.7fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 30px;
+    padding: 20px;
+`
+
+export const PostLabelsContainer = styled.div`
+    display: grid;
+    grid-template-columns: 4fr 0.3fr 0.4fr 0.7fr;
     grid-column-gap: 10px;
     grid-row-gap: 30px;
     padding: 20px;
@@ -92,16 +100,26 @@ export const PostTitle = styled.div`
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
+    margin: auto 0 auto 0;
+`
+
+export const PostComments = styled.div`
+    background-color: rgb(200,200,200);
+    padding: 10px;
+    border-radius: 10px;
+    margin: auto 0 auto 0;
 `
 
 export const PostScore = styled.div`
     background-color: rgb(200,200,200);
     padding: 10px;
     border-radius: 10px;
+    margin: auto 0 auto 0;
 `
 
 export const PostAuthor = styled.div`
     background-color: rgb(200,200,200);
     padding: 10px;
     border-radius: 10px;
+    margin: auto 0 auto 0;
 `

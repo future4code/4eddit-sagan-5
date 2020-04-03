@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as FPS from "./FeedPageStyles";
+import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import InfoIcon from '@material-ui/icons/Info';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -144,10 +145,17 @@ class FeedPage extends Component {
         <FPS.FeedContainerDisclaimer>
           Ultimos Posts:
         </FPS.FeedContainerDisclaimer>
-
+          <FPS.PostLabelsContainer>
+            <span>Titulo</span>
+            <span>Comentarios</span>
+            <span>Pontuação</span>
+            <span>Autor</span>
+          </FPS.PostLabelsContainer>
           {this.props.posts && this.props.posts.map(post => (
             <FPS.FeedContainer>
               <FPS.PostTitle onClick={() => this.props.goToPostPage(post.id)}>{post.title}</FPS.PostTitle>
+
+              <FPS.PostComments>{post.commentsCount}<ChatRoundedIcon fontSize="small" /></FPS.PostComments>
 
               <FPS.PostScore>
               <IconButton aria-label="delete" size="small">
