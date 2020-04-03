@@ -66,8 +66,12 @@ export const FeedContainer = styled.div`
     display: grid;
     grid-template-columns: 5fr 1fr 1fr;
     grid-column-gap: 10px;
-    grid-row-gap: 30px;
+    grid-row-gap: 10px;
     padding: 20px;
+`
+
+export const PostLabel = styled.h3`
+    text-align: center;
 `
 
 export const PostBody = styled.div`
