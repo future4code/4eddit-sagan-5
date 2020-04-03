@@ -88,13 +88,11 @@ class PostPage extends Component {
         </Paper>
 
         <div>
-
-          <h3>{this.props.postDetails && this.props.postDetails.title}</h3>
-
           <PPS.FeedContainer>
-
+            <PPS.PostLabel>{this.props.postDetails && this.props.postDetails.title}</PPS.PostLabel>
+            <PPS.PostLabel>Autor</PPS.PostLabel>
+            <PPS.PostLabel>Pontuação</PPS.PostLabel>
             <PPS.PostBody>{this.props.postDetails && this.props.postDetails.text} </PPS.PostBody>
-            
             <PPS.PostAuthor>{this.props.postDetails && this.props.postDetails.username}</PPS.PostAuthor>
 
             <PPS.PostScore>
@@ -140,6 +138,7 @@ class PostPage extends Component {
 
         </div>
         <h3>Comentarios</h3>
+        <h3>Comentarios ({this.props.postDetails.comments && (this.props.postDetails.comments.length)})</h3>
         {this.props.postDetails.comments && (this.props.postDetails.comments.length > 1) ? 
         <PPS.CommentSection>
           {this.props.postDetails.comments && this.props.postDetails.comments.map((comment, index) => (

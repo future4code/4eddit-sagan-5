@@ -13,7 +13,7 @@ import PostPage from "../PostPage/PostPage";
 export const routes = {
   LoginPage: "/login",
   FeedPage: "/feed",
-  HomePage: "/home",
+  HomePage: "/",
   UserPage: "/user",
   DisclaimerPage: "/disclaimer",
   PostPage: "/feed/post"
