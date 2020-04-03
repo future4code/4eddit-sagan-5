@@ -110,7 +110,7 @@ class LoginPage extends Component {
             />
 
             <TextField
-              inputProps={{ pattern: "[a-zA-Z.]{6,16}", title:"O Username precisa ter entre 6 e 16 caracteres alfanumericos." }}
+              inputProps={{ pattern: "[a-zA-Z.]{6,16}", title:"A senha precisa ter entre 6 e 16 caracteres alfanumericos." }}
               onChange={this.handleFieldChange}
               name="signupPassword"
               type="password"
